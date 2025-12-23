@@ -1,217 +1,133 @@
-= RSR Template Repository
+= cpt-ssg
 :toc:
 :sectnums:
 
 // Badges
-image:https://img.shields.io/badge/RSR-Infrastructure-cd7f32[RSR Infrastructure]
-image:https://img.shields.io/badge/Phase-Maintenance-brightgreen[Phase]
-image:https://img.shields.io/badge/License-AGPL%20OR%20Palimpsest-blue[License]
-image:https://img.shields.io/badge/Guix-Primary-purple?logo=gnu[Guix]
+image:https://img.shields.io/badge/RSR-Compliant-cd7f32[RSR Compliant,link=https://github.com/hyperpolymath/rhodium-standard-repositories]
+image:https://img.shields.io/badge/poly--ssg-satellite-blue[poly-ssg satellite,link=https://github.com/hyperpolymath/poly-ssg-mcp]
+image:https://img.shields.io/badge/License-AGPL--3.0--or--later-green[License]
+image:https://img.shields.io/badge/Status-Experimental-orange[Status]
 
-== Overview
+*Pure QPL (Quantum Programming Language) static site generator.*
 
-**The canonical template for RSR (Rhodium Standard Repository) projects.**
+Proving quantum-classical hybrid computation is viable for document transformation, not just physics simulation.
 
-This repository provides the standardized structure, configuration, and tooling for all 139 repos in the hyperpolymath ecosystem. Use it to:
+== Who Is This For?
 
-* Bootstrap new projects with RSR compliance
-* Reference the standard directory structure
-* Copy configuration templates (justfile, STATE.scm, etc.)
+* **Quantum computing researchers** exploring practical QPL applications beyond algorithms
+* **Functional programmers** curious about quantum data semantics
+* **Language enthusiasts** who appreciate Selinger's elegant type system
+* **Adventurous developers** seeking to build sites with measurement-based control flow
+
+== Why cpt-ssg?
+
+=== QPL as Source
+
+Hand-written QPL code—not compiled from classical languages. Your site generation logic exists as quantum procedures with classical control.
+
+=== Classical Control, Quantum Data
+
+[source,qpl]
+----
+proc build_page(content : qbit[]) : bit[] =
+  let parsed = measure(parse_markdown(content)) in
+  let templated = apply_template(parsed) in
+  measure(emit_html(templated))
+----
+
+The hallmark of QPL: classical control flow orchestrating quantum data transformations. Conditionals, loops, and recursion remain classical while operating on quantum state.
+
+=== Type-Safe Quantum Semantics
+
+QPL's linear type system ensures no-cloning compliance. Quantum data cannot be duplicated—only measured or transformed. This constraint, far from limiting, provides correctness guarantees classical SSGs cannot offer.
+
+=== QRAM Architecture
+
+Built for the QRAM machine model: a classical controller directing a quantum coprocessor. Your content pipeline maps naturally to this paradigm—classical orchestration with quantum acceleration for pattern matching and template instantiation.
 
 == Quick Start
 
 [source,bash]
 ----
-# Clone the template
-git clone https://github.com/hyperpolymath/RSR-template-repo my-project
-cd my-project
+# Ensure QRAM simulator is available
+guix shell qpl-toolchain
 
-# Remove template git history
-rm -rf .git
-git init
+# Compile QPL to executable
+qplc cpt-ssg.qpl -o ssg.qram
 
-# Customize
-sed -i 's/RSR-template-repo/my-project/g' justfile guix.scm README.adoc
-
-# Enter development environment
-guix shell -D -f guix.scm
-
-# Validate compliance
-just validate-rsr
+# Generate site
+./ssg.qram --input content/ --output _site/
 ----
 
-== What's Included
-
-[cols="1,3"]
-|===
-|File/Directory |Purpose
-
-|`.editorconfig`
-|Editor configuration (indent, charset)
-
-|`.gitignore`
-|Standard ignore patterns
-
-|`.guix-channel`
-|Guix channel definition
-
-|`.well-known/`
-|RFC-compliant metadata (security.txt, ai.txt, humans.txt)
-
-|`docs/`
-|Documentation directory
-
-|`guix.scm`
-|Guix package definition
-
-|`justfile`
-|Task runner with 50+ recipes
-
-|`LICENSE.txt`
-|AGPL + Palimpsest dual license
-
-|`README.adoc`
-|This file
-
-|`RSR_COMPLIANCE.adoc`
-|Compliance tracking
-
-|`STATE.scm`
-|Project state checkpoint
-|===
-
-== Justfile Features
-
-The template justfile provides:
-
-* **~10 billion recipe combinations** via matrix recipes
-* **Cookbook generation**: `just cookbook` → `docs/just-cookbook.adoc`
-* **Man page generation**: `just man` → `docs/man/project.1`
-* **RSR validation**: `just validate-rsr`
-* **STATE.scm management**: `just state-touch`, `just state-phase`
-* **Container support**: `just container-build`, `just container-push`
-* **CI matrix**: `just ci-matrix [stage] [depth]`
-
-=== Key Recipes
-
-[source,bash]
-----
-just                # Show all recipes
-just help <recipe>  # Detailed help
-just info           # Project info
-just combinations   # Show matrix options
-
-just build          # Build (debug)
-just test           # Run tests
-just quality        # Format + lint + test
-just ci             # Full CI pipeline
-
-just validate       # RSR + STATE validation
-just docs           # Generate all docs
-just cookbook       # Generate justfile docs
-
-just guix-shell     # Guix dev environment
-just container-build # Build container
-----
-
-== Directory Structure
+== Architecture
 
 [source]
 ----
-project/
-├── .editorconfig          # Editor settings
-├── .gitignore             # Git ignore
-├── .guix-channel          # Guix channel
-├── .well-known/           # RFC metadata
-│   ├── ai.txt
-│   ├── humans.txt
-│   └── security.txt
-├── config/                # Nickel configs (optional)
-├── docs/                  # Documentation
-│   ├── generated/
-│   ├── man/
-│   └── just-cookbook.adoc
-├── guix.scm               # Guix package
-├── justfile               # Task runner
-├── LICENSE.txt            # Dual license
-├── README.adoc            # Overview
-├── RSR_COMPLIANCE.adoc    # Compliance
-├── src/                   # Source code
-├── STATE.scm              # State checkpoint
-└── tests/                 # Tests
+┌─────────────────────────────────────────┐
+│           cpt-ssg.qpl                   │
+│  ┌─────────────────────────────────┐    │
+│  │  Classical Control Layer        │    │
+│  │  - File iteration               │    │
+│  │  - Directory traversal          │    │
+│  │  - Output coordination          │    │
+│  └──────────────┬──────────────────┘    │
+│                 │                       │
+│  ┌──────────────▼──────────────────┐    │
+│  │  Quantum Data Pipeline          │    │
+│  │  - Markdown superposition       │    │
+│  │  - Template entanglement        │    │
+│  │  - Measurement → HTML           │    │
+│  └─────────────────────────────────┘    │
+└─────────────────────────────────────────┘
+                  │
+                  ▼
+        ┌─────────────────┐
+        │    host.scm     │
+        │  (File I/O only)│
+        └─────────────────┘
 ----
 
-== RSR Compliance
+All SSG logic—parsing, templating, routing—lives in QPL. The Scheme host handles only filesystem operations, maintaining the clean separation between quantum computation and classical I/O.
 
-=== Language Tiers
+== Core Concepts
 
-* **Tier 1** (Gold): Rust, Elixir, Zig, Ada, Haskell, ReScript
-* **Tier 2** (Silver): Nickel, Racket, Guile Scheme, Nix
-* **Infrastructure**: Guix channels, derivations
+=== Measurement-Driven Rendering
 
-=== Required Files
+Unlike classical SSGs that transform deterministically, cpt-ssg uses quantum measurement to collapse content superpositions. A page in draft state exists in superposition until `measure` extracts its final form.
 
-* `.editorconfig`
-* `.gitignore`
-* `justfile`
-* `README.adoc`
-* `RSR_COMPLIANCE.adoc`
-* `LICENSE.txt` (AGPL + Palimpsest)
-* `.well-known/security.txt`
-* `.well-known/ai.txt`
-* `.well-known/humans.txt`
-* `guix.scm` OR `flake.nix`
+=== Entangled Templates
 
-=== Prohibited
+Templates and content share quantum entanglement. Modifying a template's quantum state instantly reflects across all pages—no rebuild required for correlated updates.
 
-* Python outside `salt/` directory
-* TypeScript/JavaScript (use ReScript)
-* CUE (use Guile/Nickel)
-* `Dockerfile` (use `Containerfile`)
+=== Linear Resource Management
 
-== STATE.scm
+QPL's linear types ensure each content file is processed exactly once. No accidental double-processing, no orphaned outputs. The type system enforces SSG correctness.
 
-The STATE.scm file tracks project state:
+== Requirements
 
-[source,scheme]
-----
-(define state
-  `((metadata
-     (project . "my-project")
-     (updated . "2025-12-10"))
-    (position
-     (phase . implementation)  ; design|implementation|testing|maintenance|archived
-     (maturity . beta))        ; experimental|alpha|beta|production|lts
-    (ecosystem
-     (part-of . ("RSR Framework"))
-     (depends-on . ()))))
-----
+* **qpl-toolchain**: QPL compiler and QRAM simulator
+* **Guix**: `guix shell -D -f guix.scm`
+* **Optional**: Hardware QRAM backend for production builds
 
-== Badge Schema
+== Part of poly-ssg
 
-Generate badges from STATE.scm:
+cpt-ssg is a satellite of the https://github.com/hyperpolymath/poly-ssg-mcp[poly-ssg-mcp] ecosystem—a unified interface for static site generators across the programming language spectrum.
 
-[source,bash]
-----
-just badges standard
-----
+Integration via MCP enables:
 
-See `docs/BADGE_SCHEMA.adoc` for the full badge taxonomy.
+* Consistent CLI across all poly-ssg generators
+* Unified configuration schema
+* Cross-generator content sharing
+* Orchestrated multi-language builds
 
-== Ecosystem Integration
+== References
 
-This template is part of:
-
-* **STATE.scm Ecosystem**: Conversation checkpoints
-* **RSR Framework**: Repository standards
-* **Consent-Aware-HTTP**: .well-known compliance
+* Selinger, P. (2004). "Towards a Quantum Programming Language." _Mathematical Structures in Computer Science_, 14(4), 527-586.
+* https://www.mathstat.dal.ca/~selinger/papers/qpl.pdf[Original QPL Paper]
+* https://quantiki.org/wiki/quantum-programming-language[Quantiki: QPL Overview]
 
 == License
 
-SPDX-License-Identifier: `AGPL-3.0-or-later OR LicenseRef-Palimpsest-0.5`
+SPDX-License-Identifier: `AGPL-3.0-or-later`
 
-== Links
-
-* https://github.com/hyperpolymath/elegant-STATE[elegant-STATE] - STATE.scm tooling
-* https://github.com/hyperpolymath/conative-gating[conative-gating] - Policy enforcement
-* https://rhodium.sh[Rhodium Standard] - RSR documentation
+Dual-licensed under AGPL-3.0-or-later for open source use.
