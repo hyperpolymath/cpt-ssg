@@ -1,13 +1,15 @@
 = cpt-ssg
+image:https://img.shields.io/badge/license-PMPL--1.0-blue.svg[License,link="https://github.com/hyperpolymath/palimpsest-license"]
 
-image:https://img.shields.io/badge/license-AGPL--3.0-blue.svg[AGPL-3.0,link="https://www.gnu.org/licenses/agpl-3.0"] image:https://img.shields.io/badge/philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
+
+
+
 :toc:
 :sectnums:
 
 // Badges
 image:https://img.shields.io/badge/RSR-Compliant-cd7f32[RSR Compliant,link=https://github.com/hyperpolymath/rhodium-standard-repositories]
 image:https://img.shields.io/badge/poly--ssg-satellite-blue[poly-ssg satellite,link=https://github.com/hyperpolymath/poly-ssg-mcp]
-image:https://img.shields.io/badge/License-AGPL--3.0--or--later-green[License]
 image:https://img.shields.io/badge/Status-Experimental-orange[Status]
 
 *Pure QPL (Quantum Programming Language) static site generator.*
@@ -130,6 +132,6 @@ Integration via MCP enables:
 
 == License
 
-SPDX-License-Identifier: `AGPL-3.0-or-later`
+SPDX-License-Identifier: PMPL-1.0
 
-Dual-licensed under AGPL-3.0-or-later for open source use.
+Dual-licensed under PMPL-1.0-or-later for open source use.
